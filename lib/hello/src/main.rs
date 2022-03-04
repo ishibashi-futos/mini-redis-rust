@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use std::env;
+use std::str::FromStr;
 
 use hello::gcd;
 

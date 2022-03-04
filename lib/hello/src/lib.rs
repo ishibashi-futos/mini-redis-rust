@@ -37,9 +37,7 @@ mod tests {
     fn test_run() {
         let x = 10;
         let y = 20;
-        let actual = {
-            x + y
-        };
+        let actual = { x + y };
 
         assert_eq!(actual, 30);
     }

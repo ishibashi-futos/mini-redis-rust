@@ -2,16 +2,14 @@ use mini_redis::{Connection, Frame};
 use tokio::net::TcpListener;
 use tokio::net::TcpStream;
 
-
+use bytes::Bytes;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
-use bytes::Bytes;
 
 type Db = Arc<Mutex<HashMap<String, Bytes>>>;
 
 #[tokio::main]
 pub async fn main() {
-
     let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
 
     let db: Db = Arc::new(Mutex::new(HashMap::new()));
@@ -38,7 +36,7 @@ async fn process(socket: TcpStream, db: Db) {
                 let mut db = db.lock().unwrap();
                 db.insert(cmd.key().to_string(), cmd.value().clone());
                 Frame::Simple("OK".into())
-            },
+            }
             Get(cmd) => {
                 let db = db.lock().unwrap();
                 if let Some(value) = db.get(cmd.key()) {
@@ -46,8 +44,8 @@ async fn process(socket: TcpStream, db: Db) {
                 } else {
                     Frame::Null
                 }
-            },
-            cmd => panic!("unimplemented command: {:?}", cmd)
+            }
+            cmd => panic!("unimplemented command: {:?}", cmd),
         };
         connection.write_frame(&response).await.unwrap();
     }
