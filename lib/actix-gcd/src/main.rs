@@ -49,7 +49,7 @@ fn post_gcd(form: web::Form<GcdParameters>) -> HttpResponse {
     }
 
     let response = format!(
-        "The gereral common divisor of {} and {} \n is <b>{}</b\n>",
+        "The gereral common divisor of {} and {} \n is <b>{}</b>\n",
         form.n,
         form.m,
         gcd(form.n, form.m)
