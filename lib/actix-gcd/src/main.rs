@@ -44,10 +44,16 @@ fn post_gcd(form: web::Form<GcdParameters>) -> HttpResponse {
             r#"
             <title>GCD Calclator</title>
             Invalid Input
-        "#,);
+        "#,
+        );
     }
 
-    let response = format!("The gereral common divisor of {} and {} \n is <b>{}</b\n>", form.n, form.m, gcd(form.n, form.m));
+    let response = format!(
+        "The gereral common divisor of {} and {} \n is <b>{}</b\n>",
+        form.n,
+        form.m,
+        gcd(form.n, form.m)
+    );
 
     HttpResponse::Ok().content_type("text/html").body(response)
 }
