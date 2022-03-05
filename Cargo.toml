@@ -7,7 +7,8 @@ edition = "2021"
 [workspace]
 members = [
     "client_examples",
-    "lib/hello"
+    "lib/hello",
+    "lib/actix-gcd"
 ]
 
 [dependencies]
