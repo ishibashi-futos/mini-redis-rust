@@ -8,7 +8,8 @@ edition = "2021"
 members = [
     "client_examples",
     "lib/hello",
-    "lib/actix-gcd"
+    "lib/actix-gcd",
+    "lib/mandelbrot",
 ]
 
 [dependencies]
