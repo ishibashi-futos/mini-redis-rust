@@ -10,6 +10,7 @@ members = [
     "lib/hello",
     "lib/actix-gcd",
     "lib/mandelbrot",
+    "lib/quickreplace",
 ]
 
 [dependencies]
