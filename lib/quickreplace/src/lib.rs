@@ -9,7 +9,10 @@ pub struct Arguments {
 }
 
 pub fn print_usage() {
-    eprintln!("{} - change occurrences of one string into another", "quickreplace".green());
+    eprintln!(
+        "{} - change occurrences of one string into another",
+        "quickreplace".green()
+    );
     eprintln!("Usage: quickreplace <target> <replacement> <INPUT> <OUTPUT>");
 }
 
@@ -28,7 +31,7 @@ pub fn parse_args(args: Vec<String>) -> Result<Arguments, usize> {
 }
 
 use regex::Regex;
-pub fn replace(target: &str, replacement: &str, text: &str) ->  Result<String, regex::Error> {
+pub fn replace(target: &str, replacement: &str, text: &str) -> Result<String, regex::Error> {
     let reg = Regex::new(target)?;
     Ok(reg.replace_all(text, replacement).to_string())
 }

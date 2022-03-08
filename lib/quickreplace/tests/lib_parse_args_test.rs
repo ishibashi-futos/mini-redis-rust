@@ -2,7 +2,11 @@ use quickreplace::*;
 
 #[test]
 fn parse_args_length_less_than_4() {
-    let args = vec![String::from("args1"), String::from("args2"), String::from("args1")];
+    let args = vec![
+        String::from("args1"),
+        String::from("args2"),
+        String::from("args1"),
+    ];
 
     let actual = parse_args(args);
 
@@ -29,10 +33,13 @@ fn parse_args_is_ok() {
 
     let actual = parse_args(args);
 
-    assert_eq!(Ok(Arguments{
-        target: String::from("world"),
-        replacement: String::from("Rust"),
-        filename: String::from("test.txt"),
-        output: String::from("test_modified.txt"),
-    }), actual);
+    assert_eq!(
+        Ok(Arguments {
+            target: String::from("world"),
+            replacement: String::from("Rust"),
+            filename: String::from("test.txt"),
+            output: String::from("test_modified.txt"),
+        }),
+        actual
+    );
 }
