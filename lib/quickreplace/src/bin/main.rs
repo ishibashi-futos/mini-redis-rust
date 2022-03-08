@@ -1,9 +1,16 @@
+use std::env;
 use quickreplace::*;
 use std::fs;
 use text_colorizer::*;
 
 fn main() {
-    let args = parse_args();
+    let args = match parse_args(env::args().skip(1).collect()) {
+        Ok(args) => args,
+        Err(len) => {
+            eprintln!("{} wrong number of arguments: expected 4, got {}.", "Error:".red().bold(), len);
+            std::process::exit(1);
+        }
+    };
 
     let data = match fs::read_to_string(&args.filename) {
         Ok(text) => text,
