@@ -11,6 +11,7 @@ members = [
     "lib/actix-gcd",
     "lib/mandelbrot",
     "lib/quickreplace",
+    "lib/basic-types",
 ]
 
 [dependencies]
