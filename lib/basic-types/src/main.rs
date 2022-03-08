@@ -69,8 +69,8 @@ fn main() {
     // staturatingはその型で表現できる最も近い値を返す
     assert_eq!(32760_i16.saturating_add(10), 32767); // i16の最大値で返してくれる
     assert_eq!((-32760_i16).saturating_sub(10), -32768); // 最小値でクランプされる
-    // クランプとは留め具のこと。その値の範囲までで固定します。ということらしい :thinking_face:
-    // 除算・乗算、ビット単位シフトには飽和演算はない
+                                                         // クランプとは留め具のこと。その値の範囲までで固定します。ということらしい :thinking_face:
+                                                         // 除算・乗算、ビット単位シフトには飽和演算はない
 
     // overflowingは(result: T, overflowd: bool)という形のタプルを返す
     assert_eq!(255_u8.overflowing_sub(2), (253, false));
