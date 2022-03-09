@@ -94,7 +94,8 @@ fn main() {
     println!("{}", f64::sqrt(2.0));
 
     // 文字
-    assert_eq!('*' as i32, 42);
+    assert_eq!('*', '\x2A'); // '*'のコードポイントはUnicodeでは2Aなので、等価である
+    assert_eq!('*' as i32, 42); // 10進数表現の場合42になるので等価
     assert_eq!('ಠ' as u16, 0xca0); // U+0CA0が符号付き8ビットに丸められた
     assert_eq!('ಠ' as i8, -0x60);
     println!("{}", '\u{CA0}');
