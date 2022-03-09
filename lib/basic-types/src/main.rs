@@ -80,4 +80,17 @@ fn main() {
     // シフト量がその型のビット数以上だった場合にoverflowedがtrueに評価される
     assert_eq!(5_u16.overflowing_shl(17), (10, true));
     // 17ビットシフトはu16には大きすぎる。17 / 16の剰余は1なので、１ビットだけシフトされる(wrapping + overflowed)?
+
+    // 浮動小数点数
+    let f = 31415.926e-4f64;
+
+    println!("f: {}", f); // `f: 3.1415926`
+
+    assert_eq!(5f32.sqrt() * & 5f32.sqrt(), 5.); // ちょうど5.0になるはず
+    assert_eq!((-1.01f64).floor(), -2.0);
+
+    // 浮動小数点数にも数学計算用のメソッドが定義される
+    println!("{}", (2.0_f64).sqrt());
+    println!("{}", f64::sqrt(2.0));
+
 }
