@@ -93,4 +93,15 @@ fn main() {
     println!("{}", (2.0_f64).sqrt());
     println!("{}", f64::sqrt(2.0));
 
+    // 文字
+    assert_eq!('*' as i32, 42);
+    assert_eq!('ಠ' as u16, 0xca0); // U+0CA0が符号付き8ビットに丸められた
+    assert_eq!('ಠ' as i8, -0x60);
+    println!("{}", '\u{CA0}');
+
+    assert_eq!('*'.is_alphabetic(), false);
+    assert!('a'.is_alphabetic());
+    assert_eq!('8'.to_digit(10), Some(8)); // char to num
+    assert_eq!('ಠ'.len_utf8(), 3);
+    assert_eq!(std::char::from_digit(2, 10), Some('2')); // num to char
 }
