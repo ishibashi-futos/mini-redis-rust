@@ -105,4 +105,27 @@ fn main() {
     assert_eq!('8'.to_digit(10), Some(8)); // char to num
     assert_eq!('ಠ'.len_utf8(), 3);
     assert_eq!(std::char::from_digit(2, 10), Some('2')); // num to char
+
+    // ポインタ型について
+    // Javaで以下のようなTuple型を用いた場合、基本的にあるオブジェクトが持つ値はオブジェクトへの参照となるが、
+    // Rustの場合ローカル変数に４つの隣接した値として確保され、ヒープには何も確保されない
+    let p = ((0, 0), (1440, 900));
+    println!("{:?}", p);
+
+    let s = String::from("Hello");
+    println!("&s: {}", &s); // &sはxへの`参照を借用する`
+    let s2 = &s;
+    println!("*s2: {}", *s2); // *s2は、s2が指す値を取得する
+    let mut s = String::from("Hello");
+    let s2 = &mut s;
+    (*s2).push_str(", World");
+    println!("s2: {}", s);
+
+    // ヒープに値を確保する方法
+    {
+        let t = (12, "eggs");
+        let b = Box::new(t);
+        println!("b: {:?}", b);
+    }
+    // bがスコープを外れると、自動的にヒープから解放される
 }
