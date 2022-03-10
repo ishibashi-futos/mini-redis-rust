@@ -128,4 +128,55 @@ fn main() {
         println!("b: {:?}", b);
     }
     // bがスコープを外れると、自動的にヒープから解放される
+
+    // 配列
+    let buffer = [0u8; 1024];
+    // [V; N] -> V: 初期値, N: 要素数
+    println!("buffer: {}", buffer.len());
+    let mut chaos = [3, 5, 4, 1, 2];
+    chaos.sort();
+    assert_eq!([1, 2, 3, 4, 5], chaos);
+
+    // Vector
+    // Vectorは、ヒープに確保されるサイズを変更できる配列
+    let primes = vec![2, 3, 5, 7]; // vecマクロで初期化する
+    assert_eq!(primes.iter().product::<i32>(), 210);
+
+    // 配列と同じように初期値と数を指定してVectorを作ることもできる
+    let new_pixex_buffer = |rows: usize, cols: usize| vec![0u8; rows * cols];
+    let buffer = new_pixex_buffer(1024, 1024);
+    println!("buffer: {}", buffer.len());
+
+    // vec!マクロは新しいからのVectorをnewで作ってから要素を追加するのと等価（同じコードになる）
+    let mut pal = Vec::new();
+    pal.push("step");
+    pal.push("on");
+    pal.push("no");
+    pal.push("pets");
+    assert_eq!(vec!["step", "on", "no", "pets"], pal);
+
+    // イテレータが生成する値から配列を作ることもできる
+    let v: Vec<i32> = (0..5).collect();
+    assert_eq!(vec![0, 1, 2, 3, 4], v);
+
+    let mut palindrome = vec!["a man", "a plan", "a cancel", "panama"];
+    palindrome.reverse();
+    assert_eq!(vec!["panama", "a cancel", "a plan", "a man"], palindrome);
+
+    // capacityが決まっていないベクターに値を追加しようとすると、
+    // より大きなバッファが確保され、現在の要素がそちらにコピーされたのち、
+    // ベクターのポインタと内容が更新され新しいバッファを参照するようになる、古いバッファは解放される -> Very heavy
+
+    // あらかじめ大きさがわかっている場合は、with_capacityを使う
+    // with_capacityを用いると、あらかじめ必要なバッファを確保してベクタを作ってくれる
+    let mut v = Vec::with_capacity(2);
+    assert_eq!(0, v.len());
+    assert_eq!(2, v.capacity());
+    v.push("Hell");
+    v.push(",");
+    assert_eq!(2, v.len());
+    assert_eq!(2, v.capacity());
+    v.push("World");
+    assert_eq!(3, v.len());
+    assert!(3 >= v.capacity()); // ちょうど4ではない可能性はあるが、少なくとも3以上になる
 }
