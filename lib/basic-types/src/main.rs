@@ -191,4 +191,22 @@ fn main() {
     assert_eq!(Some("Glass Gem"), v.pop());
     assert_eq!(Some("Snow Puff"), v.pop());
     assert_eq!(None, v.pop());
+
+    // slice
+    let v: Vec<f64> = vec![0.0, -0.707, 1.0, 0.707]; // 長さは指定しない
+    let a: [f64; 4] = [0.0, -0.707, 1.0, 0.707]; // [T; usize]
+
+    let sv: &[f64] = &v; // ヒープに確保され、所有権のない参照を得る
+    let sa: &[f64] = &a; // 参照のみ得ることができ、所有権はない
+    println!("sa: {:?}, sv: {:?}", sa, sv);
+
+    let assert = |n: &[f64], v: &[f64]| {
+        for (i, element) in n.iter().enumerate() {
+            assert_eq!(element, v.get(i).unwrap())
+        }
+    };
+    assert(sv, sa);
+    assert(&sv[0..2], &sa[0..2]);
+    assert(&sv[2..], &sa[2..]);
+    assert(&sv[1..3], &sa[1..3]);
 }
