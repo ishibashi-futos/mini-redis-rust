@@ -179,4 +179,17 @@ fn main() {
     v.push("World");
     assert_eq!(3, v.len());
     assert!(3 <= v.capacity()); // ちょうど4ではない可能性はあるが、少なくとも3以上になる
+
+    let mut v = vec![10, 20, 30, 40, 50];
+    // insert/removeは要素を全てシフトすることになるので、ベクタが長い場合は処理に時間がかかる
+    v.insert(3, 35);
+    assert_eq!(vec![10, 20, 30, 35, 40, 50], v);
+    v.remove(1);
+    assert_eq!(vec![10, 30, 35, 40, 50], v);
+
+    let mut v = vec!["Snow Puff", "Glass Gem"];
+    assert_eq!(Some("Glass Gem"), v.pop());
+    assert_eq!(Some("Snow Puff"), v.pop());
+    assert_eq!(None, v.pop());
+
 }
