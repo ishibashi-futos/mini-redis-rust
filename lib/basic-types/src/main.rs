@@ -191,5 +191,4 @@ fn main() {
     assert_eq!(Some("Glass Gem"), v.pop());
     assert_eq!(Some("Snow Puff"), v.pop());
     assert_eq!(None, v.pop());
-
 }
