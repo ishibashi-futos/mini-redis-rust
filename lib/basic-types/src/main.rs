@@ -178,5 +178,5 @@ fn main() {
     assert_eq!(2, v.capacity());
     v.push("World");
     assert_eq!(3, v.len());
-    assert!(3 >= v.capacity()); // ちょうど4ではない可能性はあるが、少なくとも3以上になる
+    assert!(3 <= v.capacity()); // ちょうど4ではない可能性はあるが、少なくとも3以上になる
 }
