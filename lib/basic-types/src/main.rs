@@ -231,11 +231,13 @@ fn main() {
     let raw_string = r"C:\Program Files\Gorillas";
     print!("{}", raw_string);
 
-    println!(r###"
+    println!(
+        r###"
     This raw string started with 'r###"'.
     Therefore it dose not end untill we reach a quote mark ('"')
     followed immediately by three pound sings ('###'): \n
-    "###);
+    "###
+    );
 
     // バイト文字列
     let method = b"GET"; // u8のスライスが得られる
