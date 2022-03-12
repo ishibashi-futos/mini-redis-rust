@@ -516,6 +516,7 @@ dependencies = [
 name = "client_examples"
 version = "0.1.0"
 dependencies = [
+ "bytes 1.1.0",
  "mini-redis",
  "tokio",
 ]

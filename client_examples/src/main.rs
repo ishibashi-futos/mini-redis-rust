@@ -1,22 +1,57 @@
 use mini_redis::{client, Result};
+use tokio::sync::mpsc;
+use tokio::sync::oneshot;
+extern crate client_examples;
+use client_examples::Command::*;
 
 #[tokio::main]
 pub async fn main() -> Result<()> {
-    // [§03-async/awaitを使う]この時点ではsay_worldの実行は行われない
-    let op = say_world();
-    let mut client = client::connect("127.0.0.1:6379").await?;
+    let (tx, mut rx) = mpsc::channel(32);
+    let tx2 = tx.clone();
+    let manager = tokio::spawn(async move {
+        let mut client = client::connect("127.0.0.1:6379").await.unwrap();
 
-    client.set("foo", "bar".into()).await?;
+        while let Some(cmd) = rx.recv().await {
+            match cmd {
+                Get { key, response } => {
+                    let res = client.get(&key).await;
+                    let _ = response.send(res);
+                },
+                Set { key, value, response } => {
+                    let res = client.set(&key, value).await;
+                    let _ = response.send(res);
+                }
+            }
+        }
+    });
 
-    let result = client.get("hello").await?;
+    let t1 = tokio::spawn(async move {
+        let (resp_tx, resp_rx) = oneshot::channel();
+        let cmd  = Get {
+            key: String::from("hello"),
+            response: resp_tx,
+        };
+        tx.send(cmd).await.unwrap();
 
-    println!("got value from the server; result={:?}", result);
-    // [§03-async/awaitを使う]このタイミングでようやくsay_worldの実行が行われる
-    op.await;
+        let res = resp_rx.await;
+        println!("GOT = {:?}", res);
+    });
+
+    let t2 = tokio::spawn(async move {
+        let (resp_tx, resp_rx) = oneshot::channel();
+        let cmd  = Set {
+            key: String::from("foo"),
+            value: "bar".into(),
+            response: resp_tx,
+        };
+        tx2.send(cmd).await.unwrap();
+        let res = resp_rx.await;
+        println!("GOT = {:?}", res);
+    });
+
+    t1.await.unwrap();
+    t2.await.unwrap();
+    manager.await.unwrap();
 
     Ok(())
-}
-
-async fn say_world() {
-    println!("Hello, world!");
 }
