@@ -16,8 +16,12 @@ pub async fn main() -> Result<()> {
                 Get { key, response } => {
                     let res = client.get(&key).await;
                     let _ = response.send(res);
-                },
-                Set { key, value, response } => {
+                }
+                Set {
+                    key,
+                    value,
+                    response,
+                } => {
                     let res = client.set(&key, value).await;
                     let _ = response.send(res);
                 }
@@ -27,7 +31,7 @@ pub async fn main() -> Result<()> {
 
     let t1 = tokio::spawn(async move {
         let (resp_tx, resp_rx) = oneshot::channel();
-        let cmd  = Get {
+        let cmd = Get {
             key: String::from("hello"),
             response: resp_tx,
         };
@@ -39,7 +43,7 @@ pub async fn main() -> Result<()> {
 
     let t2 = tokio::spawn(async move {
         let (resp_tx, resp_rx) = oneshot::channel();
-        let cmd  = Set {
+        let cmd = Set {
             key: String::from("foo"),
             value: "bar".into(),
             response: resp_tx,

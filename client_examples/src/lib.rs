@@ -1,5 +1,5 @@
-use tokio::sync::oneshot;
 use bytes::Bytes;
+use tokio::sync::oneshot;
 
 #[derive(Debug)]
 pub enum Command {
@@ -11,7 +11,7 @@ pub enum Command {
         key: String,
         value: Bytes,
         response: Responder<()>,
-    }
+    },
 }
 
 type Responder<T> = oneshot::Sender<mini_redis::Result<T>>;
