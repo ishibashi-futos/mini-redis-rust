@@ -209,4 +209,77 @@ fn main() {
     assert(&sv[0..2], &sa[0..2]);
     assert(&sv[2..], &sa[2..]);
     assert(&sv[1..3], &sa[1..3]);
+
+    // 文字列リテラルについて
+
+    // ダブルクオートはエスケープ`\`が必要
+    let speech = "\"Ouch!\" said the well.\n";
+    print!("{}", speech);
+
+    // 改行と行頭のスペースもそのまま表示される
+    let speech = "In the room the women come and, go
+    Singing of Mount Abora.";
+    print!("{}\n", speech);
+
+    // 行末を`\`で終了すると、行頭のスペースは削除される
+    let speech = "It was bright, cold day in April, and\
+    there were four of us-\
+    more or less.";
+    print!("{}\n", speech);
+
+    // 生文字列では、エスケープが不要
+    let raw_string = r"C:\Program Files\Gorillas";
+    print!("{}", raw_string);
+
+    println!(r###"
+    This raw string started with 'r###"'.
+    Therefore it dose not end untill we reach a quote mark ('"')
+    followed immediately by three pound sings ('###'): \n
+    "###);
+
+    // バイト文字列
+    let method = b"GET"; // u8のスライスが得られる
+    assert_eq!(&[b'G', b'E', b'T'], method);
+
+    let method = br"POST"; // brで生バイト文字列になる
+    assert_eq!(&[b'P', b'O', b'S', b'T'], method);
+
+    let noodles = "noodles".to_string();
+    let oodles = &noodles[1..]; // oodles
+    let poodles = "ಠ_ಠ";
+    println!("{}, {}", oodles, poodles);
+
+    assert_eq!(7, "ಠ_ಠ".len());
+    assert_eq!(3, "ಠ_ಠ".chars().count());
+
+    // &strは変更できない
+
+    // .to_stringメソッドで&str -> Stringに変換する。文字列をコピーし所有権を得る
+    let error_message = "too many pets".to_string();
+    assert_eq!(String::from("too many pets"), error_message);
+    // to_ownedでも同じようなことができる。ただし他の使い方もある
+    let error_message = "too many pets".to_owned();
+    assert_eq!(String::from("too many pets"), error_message);
+
+    assert_eq!(format!("{}° {:02}′ {:02}", 24, 5, 23), "24° 05′ 23");
+
+    let bits = vec!["veni", "vidi", "vici"];
+
+    assert_eq!("venividivici", bits.concat());
+    assert_eq!("veni, vidi, vici", bits.join(", "));
+
+    // 文字列も == と !=をサポートする
+    assert_eq!("ONE".to_lowercase(), "one");
+    assert!("ONE".to_lowercase() == "one");
+
+    assert!("peanut".contains("nut"));
+    assert_eq!("ಠ_ಠ".replace("ಠ", "x"), "x_x");
+
+    assert_eq!("    clean\n".trim(), "clean");
+    assert_eq!("    clean\n".trim_end(), "    clean");
+    assert_eq!("    clean\n".trim_start(), "clean\n");
+
+    for word in "veni, vidi, vici".split(",") {
+        assert!(word.trim().starts_with("v"));
+    }
 }
