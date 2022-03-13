@@ -1,4 +1,4 @@
-use basic_types::{Person, Person2, Parent, Child};
+use basic_types::{Child, Parent, Person, Person2};
 
 fn main() {
     assert_eq!(10_i8 as u16, 10_u16); // in range
@@ -425,7 +425,9 @@ fn main() {
 
     // stringの代入 -> 移動, i32の代入 -> Copy
 
-    let p = Parent { child: Child{ id: 32 } };
+    let p = Parent {
+        child: Child { id: 32 },
+    };
     let mut p2 = p;
     p2.child.id = 33; // 書き換えてもpには影響がない
     println!("{:?}, {:?}", p, p2); // Copyができるので、pもp2も使用可能
