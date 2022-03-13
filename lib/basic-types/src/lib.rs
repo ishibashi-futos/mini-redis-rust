@@ -18,7 +18,7 @@ pub struct Label {
 // 親だけにClone, Copyをつけてもダメ
 #[derive(Clone, Copy, Debug)]
 pub struct Parent {
-    pub child: Child
+    pub child: Child,
 }
 
 // 子にもCopyをつける
