@@ -284,4 +284,25 @@ fn main() {
     for word in "veni, vidi, vici".split(",") {
         assert!(word.trim().starts_with("v"));
     }
+
+    let s = vec!["udon".to_string(), "ramen".to_string(), "soba".to_string()];
+
+    // Vec<T>はCopyトレイトを実装していないのでここで値が移動している
+    let t = s; // `s`は未初期化状態となり、この後使用できなくなる
+    assert_eq!(vec!["udon".to_string(), "ramen".to_string(), "soba".to_string()], t);
+    // ここで移動されている値を使っているのでコンパイルエラーになる
+    // let u = s;
+
+    // 参照する場合は使える
+    let s = vec!["udon".to_string(), "ramen".to_string(), "soba".to_string()];
+    let t = &s;
+    assert_eq!(&vec!["udon".to_string(), "ramen".to_string(), "soba".to_string()], t);
+    let u = &s;
+    assert_eq!(&vec!["udon".to_string(), "ramen".to_string(), "soba".to_string()], u);
+
+    // もしくは、deep copyする
+    let s = vec!["udon".to_string(), "ramen".to_string(), "soba".to_string()];
+    let t = s.clone();
+    let u = s.clone();
+    assert_eq!(t, u);
 }
