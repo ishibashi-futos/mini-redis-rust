@@ -354,8 +354,7 @@ fn main() {
     };
 
     let mut i = 0usize;
-    while f(&mut i) {
-    }
+    while f(&mut i) {}
     assert_eq!(10usize, i);
 
     let mut v = Vec::new();
@@ -389,7 +388,10 @@ fn main() {
     }
 
     let mut composers = Vec::new();
-    composers.push(Person2 { name: Some("Palestrina".to_string()), birth: 1525 });
+    composers.push(Person2 {
+        name: Some("Palestrina".to_string()),
+        birth: 1525,
+    });
 
     // 以下のようにはできない
     // let first_name = composers[0].name;
@@ -400,7 +402,10 @@ fn main() {
 
     // 上のコードは以下のように書き換えることができる
     let mut composers = Vec::new();
-    composers.push(Person2 { name: Some("Palestrina".to_string()), birth: 1525 });
+    composers.push(Person2 {
+        name: Some("Palestrina".to_string()),
+        birth: 1525,
+    });
 
     // 値を返しながらNoneにReplaceしてくれる
     let first_name = composers[0].name.take().unwrap();
