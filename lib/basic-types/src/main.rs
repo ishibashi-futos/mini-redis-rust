@@ -1,4 +1,4 @@
-use basic_types::{Person, Person2};
+use basic_types::{Person, Person2, Parent, Child};
 
 fn main() {
     assert_eq!(10_i8 as u16, 10_u16); // in range
@@ -411,4 +411,22 @@ fn main() {
     let first_name = composers[0].name.take().unwrap();
     assert_eq!("Palestrina".to_string(), first_name);
     assert_eq!(None, composers[0].name);
+
+    // コピー型: 移動の例外について
+
+    let string1 = "some string".to_string();
+    let string2 = string1;
+    assert_eq!("some string".to_string(), string2);
+    // println!("{}, {}", string1, string2); // 移動されているためstring1は使えない
+
+    let num1: i32 = 36;
+    let num2 = num1;
+    println!("{}, {}", num1, num2); // 独立した値のコピーとして確保されるのでnum1がそのまま使える
+
+    // stringの代入 -> 移動, i32の代入 -> Copy
+
+    let p = Parent { child: Child{ id: 32 } };
+    let mut p2 = p;
+    p2.child.id = 33; // 書き換えてもpには影響がない
+    println!("{:?}, {:?}", p, p2); // Copyができるので、pもp2も使用可能
 }
