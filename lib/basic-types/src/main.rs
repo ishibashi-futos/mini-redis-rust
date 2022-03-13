@@ -431,4 +431,17 @@ fn main() {
     let mut p2 = p;
     p2.child.id = 33; // 書き換えてもpには影響がない
     println!("{:?}, {:?}", p, p2); // Copyができるので、pもp2も使用可能
+
+    use std::rc::Rc;
+    let s: Rc<String> = Rc::new("shirataki".to_string());
+    let t = s.clone();
+    let u = s.clone();
+    println!("{}, {}, {}", s, t, u);
+
+    // 全ての変数に対して、Stringのメソッドを直接実行することができる
+    assert!(s.contains("shira"));
+    assert_eq!(t.find("taki"), Some(5));
+    println!("{} are quite chewy, almost bouncy, but lack flavor", u);
+
+    // s.push_str(" noodles"); // Rcで確保した値は不変となる
 }
