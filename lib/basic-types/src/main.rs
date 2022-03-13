@@ -1,3 +1,5 @@
+use basic_types::Person;
+
 fn main() {
     assert_eq!(10_i8 as u16, 10_u16); // in range
     assert_eq!(2525_u16 as i16, 2525_i16); // in range
@@ -314,4 +316,32 @@ fn main() {
     let t = s.clone();
     let u = s.clone();
     assert_eq!(t, u);
+
+    // 移動を伴う他の操作
+
+    #[allow(unused_assignments)]
+    let mut s = "Godiva".to_string();
+    s = "Gana".to_string(); // 値"Godiva"がDropされる
+    assert_eq!(String::from("Gana"), s);
+
+    let mut s = "Godiva".to_string();
+    let t = s; // tに値の所有権が移り、sは未初期化の状態になる（？） -> GodivaはDropされない
+    s = "Gana".to_string(); // sに新しい値が書き込まれる
+    assert_eq!(String::from("Godiva"), t); // sから所有権を移された値
+    assert_eq!(String::from("Gana"), s); // 新しく書き込まれた値
+
+    // 以下のコードでは、初期化や代入以外にも、いくつかの場所で移動が行われている
+    let mut composers = Vec::new(); // [move.1] Vec::new()関数からの値の返却
+                                    // [move.2] 新しい値（Person構造体）の作成
+    composers.push(Person {
+        name: "Palestrina".to_string(),
+        birth: 1525,
+    }); // push関数への値渡し
+        // Person構造体へのポインタではなく、構造体自体がベクタのpushメソッドに渡される
+
+    // 注意点
+    // 1. 移動されるのは値そのものだけであって、それが保有するヒープ上のストレージは移動されない
+    //    ベクタや文字列の場合、値そのものは3ワードのヘッダ部分だけである
+    // 2. Rustのコンパイラコードの生成はこれらの移動を「見透かす」ことが得意。
+    //    -> コンパイラの最適化によって機械語レベルでは移動する場所に始めからオブジェクトを作ってしまうことも多い
 }
