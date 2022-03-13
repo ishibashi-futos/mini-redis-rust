@@ -1,4 +1,4 @@
-use basic_types::Person;
+use basic_types::{Person, Person2};
 
 fn main() {
     assert_eq!(10_i8 as u16, 10_u16); // in range
@@ -344,4 +344,66 @@ fn main() {
     //    ベクタや文字列の場合、値そのものは3ワードのヘッダ部分だけである
     // 2. Rustのコンパイラコードの生成はこれらの移動を「見透かす」ことが得意。
     //    -> コンパイラの最適化によって機械語レベルでは移動する場所に始めからオブジェクトを作ってしまうことも多い
+
+    let f = |i: &mut usize| {
+        if *i < 10usize {
+            *i += 1;
+            return true;
+        }
+        return false;
+    };
+
+    let mut i = 0usize;
+    while f(&mut i) {
+    }
+    assert_eq!(10usize, i);
+
+    let mut v = Vec::new();
+    for i in 101..106 {
+        v.push(i.to_string());
+    }
+
+    // let third = v[2]; // インデックスで値を引き抜くことができない -> コンパイラに借用（参照）を検討しろと言われる
+
+    // 以下のいずれかの方法でなら値を取り出せる
+    let fifth = v.pop().expect("vector is empty!");
+    assert_eq!("105", fifth);
+
+    // ベクタの指定したインデックスの場所から値を取り出し、最後の要素を代わりにそこに入れる
+    assert_eq!(vec!["101", "102", "103", "104"], v);
+    let second = v.swap_remove(1);
+    assert_eq!("102", second);
+    assert_eq!(vec!["101", "104", "103"], v); // 102がなくなって代わりに104が末尾から移動された！
+
+    // 値を取り出し、任意の値に入れ替える
+    let third = std::mem::replace(&mut v[2], "substitute".to_string());
+    assert_eq!("103", third);
+    assert_eq!(vec!["101", "104", "substitute"], v);
+
+    // `for ... in v`のようにしてループにベクタを直接渡すと、ベクタはvから移動される
+    let v = vec!["自由".to_string(), "平等".to_string(), "博愛".to_string()];
+
+    for mut s in v {
+        s.push('!');
+        println!("{}", s);
+    }
+
+    let mut composers = Vec::new();
+    composers.push(Person2 { name: Some("Palestrina".to_string()), birth: 1525 });
+
+    // 以下のようにはできない
+    // let first_name = composers[0].name;
+
+    let first_name = std::mem::replace(&mut composers[0].name, None).unwrap();
+    assert_eq!("Palestrina".to_string(), first_name);
+    assert_eq!(None, composers[0].name);
+
+    // 上のコードは以下のように書き換えることができる
+    let mut composers = Vec::new();
+    composers.push(Person2 { name: Some("Palestrina".to_string()), birth: 1525 });
+
+    // 値を返しながらNoneにReplaceしてくれる
+    let first_name = composers[0].name.take().unwrap();
+    assert_eq!("Palestrina".to_string(), first_name);
+    assert_eq!(None, composers[0].name);
 }
