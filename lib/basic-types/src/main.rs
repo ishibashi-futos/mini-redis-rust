@@ -1,5 +1,3 @@
-use std::ptr::eq;
-
 use basic_types::{Child, Parent, Person, Person2};
 
 fn main() {
@@ -539,5 +537,13 @@ fn main() {
         // 以下のコードは同じメモリアドレス上にある値の参照であるため、panicしない
         assert!(std::ptr::eq(&rx, rrx));
         assert!(std::ptr::eq(&ry, rry));
+    }
+
+    {
+        // C/C++では&演算子を特定の種類の式にしか適用できないが、Rustでは任意の式に対して参照を借用できる
+        let factorial = |n: usize| -> usize { (1..n + 1).product() };
+
+        let r = &factorial(6);
+        assert_eq!(r + &1009, 1729);
     }
 }
