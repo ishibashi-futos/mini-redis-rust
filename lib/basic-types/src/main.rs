@@ -534,6 +534,7 @@ fn main() {
         let rry = &ry;
         assert_eq!(rrx, rry); // 参照先は異なるが値が同じなのでassertionは成功する
                               // 同じメモリアドレスの値かどうかを確認するためには`std::ptr::eq`を使う
+
         // assert!(std::ptr::eq(rrx, rry)); // このコードはpanicする
         // 以下のコードは同じメモリアドレス上にある値の参照であるため、panicしない
         assert!(std::ptr::eq(&rx, rrx));
