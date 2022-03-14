@@ -446,7 +446,7 @@ fn main() {
     // s.push_str(" noodles"); // Rcで確保した値は不変となる
 
     {
-        use basic_types::reference::{show, Table, sort_works, Anime};
+        use basic_types::reference::{show, sort_works, Anime, Table};
 
         let mut table = Table::new();
 
@@ -479,7 +479,10 @@ fn main() {
         *m += 32; // 参照を解決した先にある値を直接書き換え
         assert_eq!(64, *m); // 32 + 32で64になっているはず
 
-        let aria = Anime { name: "Aria: The Animation", bechdel_pass: true };
+        let aria = Anime {
+            name: "Aria: The Animation",
+            bechdel_pass: true,
+        };
         let anime_ref = &aria;
         assert_eq!("Aria: The Animation", anime_ref.name); // 下のコードと同じ意味だが、`.`演算子によって参照解決が暗黙的に行われる
         assert_eq!("Aria: The Animation", (*anime_ref).name);
