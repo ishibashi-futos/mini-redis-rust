@@ -444,4 +444,48 @@ fn main() {
     println!("{} are quite chewy, almost bouncy, but lack flavor", u);
 
     // s.push_str(" noodles"); // Rcで確保した値は不変となる
+
+    {
+        use basic_types::reference::{show, Table, sort_works, Anime};
+
+        let mut table = Table::new();
+
+        table.insert(
+            "Gesualdo".to_string(),
+            vec![
+                "many maidrigals".to_string(),
+                "Tenebrare Responsorina".to_string(),
+            ],
+        );
+        table.insert(
+            "Caravaggio".to_string(),
+            vec![
+                "The musicians".to_string(),
+                "The Calling of St. Matther".to_string(),
+            ],
+        );
+        table.insert("Cellini".to_string(), vec![]);
+
+        show(&table);
+        sort_works(&mut table);
+        show(&table); // 共有参照を用いると、参照先で読むことができるし、所有権が移動しないので再度使える
+
+        let x = 10;
+        let r = &x; // &xはxへの共有参照
+        assert_eq!(10, *r); // 明示的に`r`の参照を解決
+
+        let mut y = 32;
+        let m = &mut y; // 可変参照を作る
+        *m += 32; // 参照を解決した先にある値を直接書き換え
+        assert_eq!(64, *m); // 32 + 32で64になっているはず
+
+        let aria = Anime { name: "Aria: The Animation", bechdel_pass: true };
+        let anime_ref = &aria;
+        assert_eq!("Aria: The Animation", anime_ref.name); // 下のコードと同じ意味だが、`.`演算子によって参照解決が暗黙的に行われる
+        assert_eq!("Aria: The Animation", (*anime_ref).name);
+
+        let mut v = vec![1973, 1968];
+        v.sort(); // 暗黙にv屁の可変参照を借用しているので下記のコードと等価である
+        (&mut v).sort();
+    }
 }

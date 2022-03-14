@@ -26,3 +26,28 @@ pub struct Parent {
 pub struct Child {
     pub id: u32,
 }
+
+pub mod reference {
+    use std::collections::HashMap;
+
+    pub type Table = HashMap<String, Vec<String>>;
+    pub fn show(table: &Table) {
+        for (artist, works) in table {
+            println!("works by {}: ", artist);
+            for work in works {
+                println!("  {}", work);
+            }
+        }
+    }
+
+    pub fn sort_works(table: &mut Table) {
+        for (_artist, works) in table {
+            works.sort();
+        }
+    }
+
+    pub struct Anime {
+        pub name: &'static str,
+        pub bechdel_pass: bool,
+    }
+}
