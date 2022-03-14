@@ -1,3 +1,5 @@
+use std::ptr::eq;
+
 use basic_types::{Child, Parent, Person, Person2};
 
 fn main() {
@@ -446,7 +448,7 @@ fn main() {
     // s.push_str(" noodles"); // Rcで確保した値は不変となる
 
     {
-        use basic_types::reference::{show, sort_works, Anime, Table, Point};
+        use basic_types::reference::{show, sort_works, Anime, Point, Table};
 
         let mut table = Table::new();
 
@@ -506,7 +508,7 @@ fn main() {
         let r = &point;
         let rr = &r;
         let rrr = &rr;
-        let expect = Point {x: 1000, y: 729};
+        let expect = Point { x: 1000, y: 729 };
         assert_eq!(expect, *r);
 
         assert_eq!(expect, *(*rr));
@@ -515,9 +517,26 @@ fn main() {
         assert_eq!(expect.x, rr.x);
         assert_eq!(expect.y, rr.y);
 
-        assert_eq!(expect, *(*((*rrr))));
+        assert_eq!(expect, *(*(*rrr)));
         assert_eq!(expect, ***rrr);
         assert_eq!(expect.x, rrr.x);
         assert_eq!(expect.y, rrr.y);
+    }
+
+    {
+        let x = 10;
+        let y = 10;
+
+        let rx = &x;
+        let ry = &y;
+
+        let rrx = &rx;
+        let rry = &ry;
+        assert_eq!(rrx, rry); // 参照先は異なるが値が同じなのでassertionは成功する
+                              // 同じメモリアドレスの値かどうかを確認するためには`std::ptr::eq`を使う
+        // assert!(std::ptr::eq(rrx, rry)); // このコードはpanicする
+        // 以下のコードは同じメモリアドレス上にある値の参照であるため、panicしない
+        assert!(std::ptr::eq(&rx, rrx));
+        assert!(std::ptr::eq(&ry, rry));
     }
 }
