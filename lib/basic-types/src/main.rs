@@ -446,7 +446,7 @@ fn main() {
     // s.push_str(" noodles"); // Rcで確保した値は不変となる
 
     {
-        use basic_types::reference::{show, sort_works, Anime, Table};
+        use basic_types::reference::{show, sort_works, Anime, Table, Point};
 
         let mut table = Table::new();
 
@@ -490,5 +490,34 @@ fn main() {
         let mut v = vec![1973, 1968];
         v.sort(); // 暗黙にv屁の可変参照を借用しているので下記のコードと等価である
         (&mut v).sort();
+
+        let x = 10;
+        let y = 20;
+        let mut r = &x;
+        let b = false;
+
+        // bがtrueになるとyの値で書き換えられる
+        if b {
+            r = &y;
+        }
+        assert_eq!(*r, 10);
+
+        let point = Point::new(1000, 729);
+        let r = &point;
+        let rr = &r;
+        let rrr = &rr;
+        let expect = Point {x: 1000, y: 729};
+        assert_eq!(expect, *r);
+
+        assert_eq!(expect, *(*rr));
+        assert_eq!(expect, **rr);
+        // `.`演算子により、暗黙的にネストした参照を取り払って目的の値を取り出してくれる
+        assert_eq!(expect.x, rr.x);
+        assert_eq!(expect.y, rr.y);
+
+        assert_eq!(expect, *(*((*rrr))));
+        assert_eq!(expect, ***rrr);
+        assert_eq!(expect.x, rrr.x);
+        assert_eq!(expect.y, rrr.y);
     }
 }
