@@ -580,10 +580,8 @@ fn main() {
         //         STASH = p;
         //     }
         // };
-        let f = |p: &'static i32| {
-            unsafe {
-                STASH = p;
-            }
+        let f = |p: &'static i32| unsafe {
+            STASH = p;
         };
         f(&256);
         unsafe {
@@ -602,7 +600,9 @@ fn main() {
         fn smallest<'a>(v: &'a [i32]) -> &'a i32 {
             let mut s = &v[0];
             for r in &v[1..] {
-                if *r < *s { s = r }
+                if *r < *s {
+                    s = r
+                }
             }
             s
         }
