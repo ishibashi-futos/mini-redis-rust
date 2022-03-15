@@ -571,4 +571,48 @@ fn main() {
         }
         assert_eq!(1, l);
     }
+
+    {
+        static mut STASH: &i32 = &128;
+        // このままだと変数pのライフタイムが分からないのでコンパイルできない
+        // let f = |p: &i32| {
+        //     unsafe {
+        //         STASH = p;
+        //     }
+        // };
+        let f = |p: &'static i32| {
+            unsafe {
+                STASH = p;
+            }
+        };
+        f(&256);
+        unsafe {
+            assert_eq!(256, *STASH);
+        }
+        // 以下のコードは`i`のライフタイムがstaticではないためにコンパイルできない
+        // let i = 256;
+        // f(&i);
+
+        let i: &'static i32 = &512;
+        f(i);
+        unsafe {
+            assert_eq!(512, *STASH);
+        }
+
+        fn smallest<'a>(v: &'a [i32]) -> &'a i32 {
+            let mut s = &v[0];
+            for r in &v[1..] {
+                if *r < *s { s = r }
+            }
+            s
+        }
+
+        let r;
+        {
+            let paradola = vec![9, 4, 1, 0, 1, 4, 9];
+            r = smallest(&paradola);
+            assert_eq!(&0, r); // paradolaの依存期間と同様なので問題が発生しない
+        }
+        // assert_eq!(0, *r); // dropされた配列の要素を指しているのでコンパイルできなくなる
+    }
 }
