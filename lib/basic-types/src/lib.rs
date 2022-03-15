@@ -63,3 +63,30 @@ pub mod reference {
         }
     }
 }
+
+pub mod reference_struct {
+    // このコードはコンパイルできない
+    // pub struct S {
+    //     r: &i32, // rの生存期間がわからない
+    // }
+
+    // &'staticでも良いが、制約がきつすぎる
+    // 構造体が生きている間は変数が残っていてほしいので、&'aにする
+    pub struct S<'a> {
+        pub r: &'a i32,
+    }
+
+    pub struct S2 {
+        pub r: &'static i32,
+    }
+
+    pub struct S3<'a> {
+        pub x: &'a i32,
+        pub y: &'a i32,
+    }
+
+    pub struct S4<'a, 'b> {
+        pub x: &'a i32,
+        pub y: &'b i32,
+    }
+}

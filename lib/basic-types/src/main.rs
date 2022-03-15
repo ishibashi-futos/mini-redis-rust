@@ -615,4 +615,50 @@ fn main() {
         }
         // assert_eq!(0, *r); // dropされた配列の要素を指しているのでコンパイルできなくなる
     }
+
+    {
+        use basic_types::reference_struct::*;
+
+        let s;
+        let s2;
+        {
+            let x = 10;
+            s = S { r: &x };
+            assert_eq!(*s.r, 10);
+
+            static NUM: &'static i32 = &10;
+            s2 = S2 { r: NUM };
+            assert_eq!(*s2.r, 10);
+        }
+
+        let x = 10;
+        let r;
+        {
+            let y = 20;
+            {
+                let s = S3 { x: &x, y: &y };
+                r = s.x;
+                assert_eq!(&10, r);
+            }
+        }
+        // このコードはコンパイルできない
+        // println!("{}", r);
+        // Sの２つのフィールドは同じ生存期間を持たなければならない
+        // r = s.xのように代入しているので、'aはrの生存時間を内包している（？！）
+        // yをrより内側のブロックで初期化しているので、'aはyの生存時間より長くはならない
+
+        // xとyに異なる生存期間を与えるようにすることで解決できる
+        let x = 10;
+        let r;
+        {
+            let y = 20;
+            {
+                let s = S4 { x: &x, y: &y };
+                r = s.x;
+                assert_eq!(&10, r);
+            }
+        }
+        // このコードはコンパイルできない
+        assert_eq!(&10, r);
+    }
 }
