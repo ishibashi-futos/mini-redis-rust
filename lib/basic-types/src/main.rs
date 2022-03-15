@@ -546,4 +546,8 @@ fn main() {
         let r = &factorial(6);
         assert_eq!(r + &1009, 1729);
     }
+
+    // Rustには２種類のFat Pointerがある
+    // 1. 何らかのアドレスと長さをもつFat Pointer(sliceなど)
+    // 2. 特定のトレイトを実装した値への参照であるトレイトオブジェクト
 }
