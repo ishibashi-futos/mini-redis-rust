@@ -763,7 +763,6 @@ fn main() {
     }
 
     {
-
         // 以下の式はコンパイルエラーになる
         // let v = Vec<i32>::with_capacity(10);
         // let ramp (0 .. 10).collect<Vec<i32>>();
@@ -793,7 +792,9 @@ fn main() {
         // フィールドと要素
         use basic_types::field_and_properties::*;
 
-        let game = Game { black_spawns: false };
+        let game = Game {
+            black_spawns: false,
+        };
 
         assert!(!game.black_spawns); // 構造体のフィールドへのアクセス
 
@@ -811,16 +812,16 @@ fn main() {
         let midpoint = 2usize;
         let end = v.len();
         // vectorからSliceを取り出す
-        let v2 = &v[midpoint .. end];
+        let v2 = &v[midpoint..end];
         assert_eq!(&vec![30, 40, 50], v2);
 
         // 以下の式の場合は`3`が含まれる
-        for i in 0 ..= 3 {
+        for i in 0..=3 {
             assert!(i <= 3);
         }
 
         // 以下の式の場合は`3`が**含まれない**
-        for i in 0 .. 3 {
+        for i in 0..3 {
             assert!(i < 3);
         }
 
@@ -831,8 +832,8 @@ fn main() {
 
             // ここが正しくないロジックなのでうまく動かない
             let pivot_index = slice.len() / 2;
-            quick_sort(&mut slice[ .. pivot_index]); // 前半分のスライスをソートする
-            quick_sort(&mut slice[pivot_index + 1 ..]); // 後ろ半分のスライスをソートする
+            quick_sort(&mut slice[..pivot_index]); // 前半分のスライスをソートする
+            quick_sort(&mut slice[pivot_index + 1..]); // 後ろ半分のスライスをソートする
         }
 
         let mut v = vec![1, 3, 4, 7, 8, 10, 9, 6, 5, 2];
