@@ -686,7 +686,7 @@ fn main() {
             0 => -1,
             1 => 1,
             2 => 2,
-            _ => panic!("code is out of bounce")
+            _ => panic!("code is out of bounce"),
         };
         assert_eq!(-1, code);
 
@@ -697,7 +697,7 @@ fn main() {
 
         let name = match params.get("name") {
             Some(name) => name,
-            None => "名無しの権兵衛"
+            None => "名無しの権兵衛",
         };
 
         assert_eq!("John", name);
@@ -712,7 +712,7 @@ fn main() {
         for s in errors {
             assert!(s.starts_with("error"));
         } // errorsはここでdropされる
-        // assert_eq!(3, errors.len()); // dropされた値を使用しているためコンパイルエラーになる
+          // assert_eq!(3, errors.len()); // dropされた値を使用しているためコンパイルエラーになる
 
         let errors = vec!["error (1)", "error (2)", "error (3)"];
         // 共用参照を作ることでドロップされなくなる
