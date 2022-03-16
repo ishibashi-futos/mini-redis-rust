@@ -788,4 +788,61 @@ fn main() {
         let v = new_vector2();
         assert_eq!(10, v.len());
     }
+
+    {
+        // フィールドと要素
+        use basic_types::field_and_properties::*;
+
+        let game = Game { black_spawns: false };
+
+        assert!(!game.black_spawns); // 構造体のフィールドへのアクセス
+
+        let rgba = (0u8, 255u8, 128u8, 1.0); // タプル要素へのアクセスには番号を用いる
+        assert_eq!(1.0, rgba.3);
+        assert_eq!(128, rgba.2);
+        assert_eq!(255, rgba.1);
+        assert_eq!(0, rgba.0);
+
+        let mut slice = [0; 10];
+        slice[0] = 10;
+        assert_eq!(10, slice[0]);
+
+        let v = vec![10, 20, 30, 40, 50];
+        let midpoint = 2usize;
+        let end = v.len();
+        // vectorからSliceを取り出す
+        let v2 = &v[midpoint .. end];
+        assert_eq!(&vec![30, 40, 50], v2);
+
+        // 以下の式の場合は`3`が含まれる
+        for i in 0 ..= 3 {
+            assert!(i <= 3);
+        }
+
+        // 以下の式の場合は`3`が**含まれない**
+        for i in 0 .. 3 {
+            assert!(i < 3);
+        }
+
+        fn quick_sort<T: Ord>(slice: &mut [T]) {
+            if slice.len() <= 1 {
+                return;
+            }
+
+            // ここが正しくないロジックなのでうまく動かない
+            let pivot_index = slice.len() / 2;
+            quick_sort(&mut slice[ .. pivot_index]); // 前半分のスライスをソートする
+            quick_sort(&mut slice[pivot_index + 1 ..]); // 後ろ半分のスライスをソートする
+        }
+
+        let mut v = vec![1, 3, 4, 7, 8, 10, 9, 6, 5, 2];
+        quick_sort(&mut v);
+        println!("{:?}", v);
+
+        let padvan: Vec<u32> = vec![10, 20, 30];
+        for elem in &padvan {
+            assert!(elem <= &30);
+            assert!(*elem < 31);
+        }
+    }
 }

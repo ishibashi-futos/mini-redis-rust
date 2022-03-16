@@ -90,3 +90,9 @@ pub mod reference_struct {
         pub y: &'b i32,
     }
 }
+
+pub mod field_and_properties {
+    pub struct Game {
+        pub black_spawns: bool,
+    }
+}
