@@ -678,4 +678,28 @@ fn main() {
         let status = if result.is_ok() { "OK" } else { "ng" };
         assert_eq!("OK", status);
     }
+
+    {
+        let code = 0;
+
+        let code = match code {
+            0 => -1,
+            1 => 1,
+            2 => 2,
+            _ => panic!("code is out of bounce")
+        };
+        assert_eq!(-1, code);
+
+        use std::collections::HashMap;
+
+        let mut params = HashMap::new();
+        params.entry("name").or_insert("John");
+
+        let name = match params.get("name") {
+            Some(name) => name,
+            None => "名無しの権兵衛"
+        };
+
+        assert_eq!("John", name);
+    }
 }
