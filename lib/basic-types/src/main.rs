@@ -702,4 +702,23 @@ fn main() {
 
         assert_eq!("John", name);
     }
+
+    {
+        for i in 0..20 {
+            assert!(i < 20);
+        }
+
+        let errors = vec!["error (1)", "error (2)", "error (3)"];
+        for s in errors {
+            assert!(s.starts_with("error"));
+        } // errorsはここでdropされる
+        // assert_eq!(3, errors.len()); // dropされた値を使用しているためコンパイルエラーになる
+
+        let errors = vec!["error (1)", "error (2)", "error (3)"];
+        // 共用参照を作ることでドロップされなくなる
+        for s in &errors {
+            assert!(s.starts_with("error"));
+        }
+        assert_eq!(3, errors.len());
+    }
 }
