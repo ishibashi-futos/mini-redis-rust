@@ -666,17 +666,16 @@ fn main() {
     {
         // 式をIf文や関数・マクロの引数にすることもできる
         let s = Some("xxx");
-        assert_eq!("xxx", match s {
-            Some(v) => v,
-            _ => "xxx",
-        });
+        assert_eq!(
+            "xxx",
+            match s {
+                Some(v) => v,
+                _ => "xxx",
+            }
+        );
 
         let result: Result<&str, ()> = Ok("ok");
-        let status = if result.is_ok() {
-            "OK"
-        } else {
-            "ng"
-        };
+        let status = if result.is_ok() { "OK" } else { "ng" };
         assert_eq!("OK", status);
     }
 }
