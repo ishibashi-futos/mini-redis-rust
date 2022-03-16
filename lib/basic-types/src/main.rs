@@ -721,4 +721,44 @@ fn main() {
         }
         assert_eq!(3, errors.len());
     }
+
+    {
+        let mut numbers = vec![10, 20, 30, 4];
+        let mut next_number = || -> Option<i32> { numbers.pop() }; // 4, 30, 20, 10の順に値を返す
+
+        // loopには`'label:`という形式のラベルを作ることができる
+        let sqrt = 'outer: loop {
+            let n = next_number().unwrap();
+            for i in 1.. {
+                let square = i * i;
+                if square == n {
+                    break 'outer i; // 'label 値とすることで戻り値を指定することもできる
+                }
+                if square > n {
+                    break;
+                }
+            }
+        };
+        assert_eq!(2, sqrt);
+
+        // while式で特定のパターンの場合に処理を行いたい場合
+        let mut numbers = vec![10, 20, 30, 4];
+        let mut next_number = || -> Option<i32> { numbers.pop() };
+        // vにバインドすることもできる
+        while let Some(v) = next_number() {
+            println!("{}", v);
+        }
+
+        // 呼び出しを行なっても決して帰ってこないことを示す関数の戻り値は`!`で表現する
+        #[allow(dead_code)]
+        fn serve_forever() -> ! {
+            //
+            loop {
+                std::thread::sleep(std::time::Duration::from_millis(100));
+            }
+        }
+        // 以下2行のコメントアウトを外すと一生帰ってこなくなり、panicは呼ばれない
+        // serve_forever();
+        // panic!("panic!");
+    }
 }
