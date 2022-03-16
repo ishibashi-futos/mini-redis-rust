@@ -761,4 +761,31 @@ fn main() {
         // serve_forever();
         // panic!("panic!");
     }
+
+    {
+
+        // 以下の式はコンパイルエラーになる
+        // let v = Vec<i32>::with_capacity(10);
+        // let ramp (0 .. 10).collect<Vec<i32>>();
+        // `<`が比較演算子として認識されてしまっているため
+
+        // `::<...>`(ターボフィッシュ)を使えばOK
+        let v = Vec::<i32>::with_capacity(10);
+        assert_eq!(10, v.capacity());
+        let ramp = (0..10).collect::<Vec<i32>>();
+        assert_eq!(10, ramp.len());
+
+        // 型パラメータを省略して、コンパイラに推測させることができる場合もある
+        fn new_vector() -> Vec<i32> {
+            Vec::with_capacity(10)
+        }
+        let v = new_vector();
+        assert_eq!(10, v.capacity());
+
+        fn new_vector2() -> Vec<i32> {
+            (0..10).collect::<Vec<i32>>()
+        }
+        let v = new_vector2();
+        assert_eq!(10, v.len());
+    }
 }
