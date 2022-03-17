@@ -7,3 +7,29 @@ pub mod rewind {
         (half, half / crew_size as u64)
     }
 }
+
+pub mod results {
+    pub struct LatLng {
+        pub lat: f64,
+        pub lng: f64,
+    }
+
+    #[derive(Debug, PartialEq)]
+    pub enum Weather {
+        Sunny,
+        Cloudy,
+    }
+
+    pub fn get_weather(location: LatLng) -> Result<Weather, String> {
+
+        if location.lat == 10f64 && location.lng == 100f64 {
+            return Ok(Weather::Sunny);
+        }
+
+        if location.lat == 25f64 && location.lng == 35f64 {
+            return Ok(Weather::Cloudy);
+        }
+
+        Err("Invalid location.".to_string())
+    }
+}
