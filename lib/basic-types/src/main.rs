@@ -846,4 +846,19 @@ fn main() {
             assert!(*elem < 31);
         }
     }
+
+    // closure
+    {
+        let is_even = |x| x % 2 == 0;
+
+        assert!(!is_even(1u32));
+        assert!(is_even(2u32));
+        assert!(!is_even(3u32));
+        assert!(is_even(4u32));
+        assert!(!is_even(5u32));
+        assert!(is_even(6u32));
+        assert!(!is_even(7u32));
+        assert!(is_even(8u32));
+        assert!(!is_even(9u32));
+    }
 }
