@@ -21,7 +21,6 @@ pub mod results {
     }
 
     pub fn get_weather(location: LatLng) -> Result<Weather, String> {
-
         if location.lat == 10f64 && location.lng == 100f64 {
             return Ok(Weather::Sunny);
         }
