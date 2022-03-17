@@ -12,6 +12,7 @@ members = [
     "lib/mandelbrot",
     "lib/quickreplace",
     "lib/basic-types",
+    "lib/error-handling",
 ]
 
 [dependencies]
