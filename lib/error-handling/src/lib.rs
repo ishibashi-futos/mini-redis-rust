@@ -32,3 +32,26 @@ pub mod results {
         Err("Invalid location.".to_string())
     }
 }
+
+pub mod errors {
+
+    // 単純にエラーを返したい場合は以下のように定義することでできる
+    #[derive(Debug, Clone)]
+    pub struct CustomError {
+        pub message: String,
+        pub line: usize,
+        pub column: usize,
+    }
+
+    // 標準のエラー型のように、自動的にいい感じにしたければ以下の実装が必要
+    use std::fmt;
+    impl std::fmt::Display for CustomError {
+        fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+            write!(f, "{} ({}:{})", self.message, self.line, self.column)
+        }
+    }
+
+    impl std::error::Error for CustomError {
+        // 何も実装しなくてよい
+    }
+}

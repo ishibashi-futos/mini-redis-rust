@@ -126,5 +126,66 @@ fn main() {
         let v = result.as_ref().ok();
         assert_eq!(Some(&Weather::Cloudy), v);
         assert_eq!(Some(Weather::Cloudy), result.ok()); // ここで初めて移動される
+
+        {
+            // Result型のエイリアスを作ることができる
+            type Result<Weather> = std::result::Result<Weather, String>;
+            fn try_get_weather(location: LatLng) -> Result<Weather> {
+                // 返り値がResult<T, E>の関数内で、Result<?, E>を返す関数の場合、
+                // `?`をつけることでErr(E)が返った場合自動的にreturnしてくれる
+                let weather = get_weather(location)?;
+
+                Ok(match weather {
+                    Weather::Cloudy => Weather::Sunny,
+                    Weather::Sunny => Weather::Cloudy
+                })
+            }
+
+            assert_eq!(Ok(Weather::Sunny), try_get_weather(LatLng {
+                lat: 25f64,
+                lng: 35f64,
+            }));
+        }
+
+        {
+            // `?`で返却できるのはResult<T, E>のEに変換可能なもののみ
+            // エラー型の変換処理を実装するか、全てのエラーを表すシグネチャを作成する
+            // GenericError::fromで既存のエラー型を総称できる
+            type GenericError = Box<dyn std::error::Error + Send + Sync + 'static>;
+            use std::io;
+            let io_error = io::Error::new(io::ErrorKind::Other, "timed out");
+
+            // fromメソッドでエラーに変換できる
+            let g_error = GenericError::from(io_error);
+            println!("{:?}", &g_error);
+
+            // 特定のエラーだった場合のみリトライを実施したい時などは、error.downcast_ref::<ErrorType>()を用いる
+            let r: Result<(), GenericError> = Err(g_error);
+            match r {
+                Ok(()) => panic!("Unexpected operation"),
+                Err(err) => {
+                    // 総称型の中からio:Errorだった場合のみ取り出す
+                    if let Some(msg) = err.downcast_ref::<io::Error>() {
+                        println!("{}", msg);
+                    } else {
+                        panic!("Unexpected operation");
+                    }
+                }
+            }
+        }
+
+        {
+            // 起こるはずのないエラーの場合は、unwrapしてしまう
+            let digits = "bleen";
+            let num = digits.parse::<u64>();
+            println!("{:?}", num);
+
+            let num = "3.14".parse::<f64>().unwrap();
+            assert_eq!(3.14f64, num);
+
+            use error_handling::errors::*;
+            let c = CustomError { message: "Error".to_string(), line: 10, column: 100 };
+            println!("{:?}", c);
+        }
     }
 }
