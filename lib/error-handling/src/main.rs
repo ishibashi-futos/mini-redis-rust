@@ -137,14 +137,17 @@ fn main() {
 
                 Ok(match weather {
                     Weather::Cloudy => Weather::Sunny,
-                    Weather::Sunny => Weather::Cloudy
+                    Weather::Sunny => Weather::Cloudy,
                 })
             }
 
-            assert_eq!(Ok(Weather::Sunny), try_get_weather(LatLng {
-                lat: 25f64,
-                lng: 35f64,
-            }));
+            assert_eq!(
+                Ok(Weather::Sunny),
+                try_get_weather(LatLng {
+                    lat: 25f64,
+                    lng: 35f64,
+                })
+            );
         }
 
         {
@@ -184,7 +187,11 @@ fn main() {
             assert_eq!(3.14f64, num);
 
             use error_handling::errors::*;
-            let c = CustomError { message: "Error".to_string(), line: 10, column: 100 };
+            let c = CustomError {
+                message: "Error".to_string(),
+                line: 10,
+                column: 100,
+            };
             println!("{:?}", c);
         }
     }
