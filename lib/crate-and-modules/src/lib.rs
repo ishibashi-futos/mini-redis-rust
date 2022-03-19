@@ -36,6 +36,5 @@ pub fn run_simulation(fern: &mut Fern, days: usize) {
 /// assert_eq!(crate_and_modules::overlap(0..0, 0..10), false);
 /// ```
 pub fn overlap(r1: Range<usize>, r2: Range<usize>) -> bool {
-    r1.start < r1.end && r2.start < r2.end &&
-        r1.start < r2.end && r2.start < r1.end
+    r1.start < r1.end && r2.start < r2.end && r1.start < r2.end && r2.start < r1.end
 }
