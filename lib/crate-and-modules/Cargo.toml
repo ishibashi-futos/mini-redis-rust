@@ -6,3 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# バージョンの書き方
+# image = "=0.10.0" # 厳密にバージョン`0.10.0`だけを使う
+# image = ">=1.0.5" # 1.0.5もしくはそれ以上の最新バージョンを用いる
+# image = ">1.0.5 <1.1.9" # 1.0.5よりも大きく、1.1.9よりも小さいバージョン
+# image = "<=2.7.10" # 2.7.10以下のバージョン
