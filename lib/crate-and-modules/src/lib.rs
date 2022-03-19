@@ -16,7 +16,7 @@ impl Fern {
 }
 
 pub fn run_simulation(fern: &mut Fern, days: usize) {
-    for _ in 0 .. days {
+    for _ in 0..days {
         fern.grow();
     }
 }

@@ -1,4 +1,4 @@
-use crate_and_modules::{Fern, run_simulation};
+use crate_and_modules::{run_simulation, Fern};
 
 fn main() {
     let mut fern = Fern {
