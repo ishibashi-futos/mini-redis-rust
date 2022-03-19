@@ -13,6 +13,7 @@ members = [
     "lib/quickreplace",
     "lib/basic-types",
     "lib/error-handling",
+    "lib/crate-and-modules",
 ]
 
 [dependencies]
