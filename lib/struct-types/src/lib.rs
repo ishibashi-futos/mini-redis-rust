@@ -1,3 +1,5 @@
+pub mod broom;
+
 #[derive(Debug, PartialEq)]
 pub struct GrayscaleMap {
     pub pixels: Vec<u8>,
