@@ -70,3 +70,12 @@ fn is_empty_owned() {
     assert!(q.is_empty_owned());
     // q.pop(); // moveされているのでこの行はコンパイルできない
 }
+
+#[test]
+fn boxed() {
+    let mut boxed_queue = Box::new(Queue::new());
+
+    boxed_queue.push('a'); // コンパイラが自動的にBoxから`&mut Queue`を借用してくれる
+
+    assert_eq!(Some('a'), boxed_queue.pop());
+}
