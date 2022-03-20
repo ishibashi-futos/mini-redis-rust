@@ -1,11 +1,10 @@
 /// charの先入先出キュー
 pub struct Queue {
     older: Vec<char>,
-    younger: Vec<char>
+    younger: Vec<char>,
 }
 
 impl Queue {
-
     pub fn new() -> Queue {
         Queue {
             older: Vec::new(),
