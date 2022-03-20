@@ -1,6 +1,7 @@
 pub mod broom;
 pub mod node;
 pub mod queue;
+pub mod vecotr;
 
 #[derive(Debug, PartialEq)]
 pub struct GrayscaleMap {
