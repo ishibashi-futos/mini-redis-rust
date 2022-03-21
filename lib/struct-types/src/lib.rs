@@ -1,9 +1,9 @@
 pub mod broom;
+pub mod generic;
 pub mod node;
 pub mod queue;
-pub mod vecotr;
-pub mod generic;
 pub mod spider_robot;
+pub mod vecotr;
 
 #[derive(Debug, PartialEq)]
 pub struct GrayscaleMap {

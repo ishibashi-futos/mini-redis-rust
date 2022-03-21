@@ -9,7 +9,7 @@ impl<'a> SpiderRobot<'a> {
     pub fn new() -> SpiderRobot<'a> {
         SpiderRobot {
             hardware_error_count: Cell::new(0),
-            log_file: RefCell::new(Vec::new())
+            log_file: RefCell::new(Vec::new()),
         }
     }
 
@@ -33,7 +33,6 @@ impl SpiderRobot<'_> {
     pub fn get_hardware_error(&self) -> u32 {
         self.hardware_error_count.get()
     }
-
 }
 
 #[cfg(test)]
@@ -89,7 +88,6 @@ mod tests {
 
         assert_eq!("Hello world!".len(), ref_cell.borrow().len());
     }
-
 }
 
 #[test]

@@ -5,7 +5,10 @@ pub struct Queue<T> {
 
 impl<T> Queue<T> {
     pub fn new() -> Queue<T> {
-        Queue { older: Vec::new(), younger: Vec::new() }
+        Queue {
+            older: Vec::new(),
+            younger: Vec::new(),
+        }
     }
 
     pub fn push(&mut self, t: T) {
