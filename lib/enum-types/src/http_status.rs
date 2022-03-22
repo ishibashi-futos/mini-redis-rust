@@ -15,7 +15,7 @@ impl HttpStatusCode {
             404 => Some(HttpStatusCode::NotFound),
             418 => Some(HttpStatusCode::IamaTeapot),
             500 => Some(HttpStatusCode::InternalError),
-            _ => None
+            _ => None,
         }
     }
 }
