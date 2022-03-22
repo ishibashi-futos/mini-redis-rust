@@ -15,6 +15,7 @@ members = [
     "lib/error-handling",
     "lib/crate-and-modules",
     "lib/struct-types",
+    "lib/enum-types",
 ]
 
 [dependencies]
