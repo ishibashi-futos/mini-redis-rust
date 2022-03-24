@@ -53,6 +53,23 @@ pub enum RoughTime {
     InTheFuture(TimeUnit, u32),
 }
 
+impl RoughTime {
+    pub fn rough_time_to_english(&self) -> String {
+        match self {
+            &RoughTime::InThePast(units, 1) =>
+                format!("a {} ago", units.singular()),
+            &RoughTime::InThePast(units, count) =>
+                format!("{} {} ago", count, units.to_str()),
+            &RoughTime::JustNow =>
+                format!("just now"),
+            &RoughTime::InTheFuture(units, 1) =>
+                format!("a {} from now", units.singular()),
+            &RoughTime::InTheFuture(units, count) =>
+                format!("{} {} from now", count, units.to_str()),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests_rough_time {
     use super::*;
@@ -69,6 +86,24 @@ mod tests_rough_time {
         let time = RoughTime::InTheFuture(TimeUnit::Hours, 3);
 
         assert_eq!(RoughTime::InTheFuture(TimeUnit::Hours, 3), time);
+    }
+
+    #[test]
+    fn future_to_english() {
+        let time = RoughTime::InTheFuture(TimeUnit::Hours, 3);
+
+        let actual = time.rough_time_to_english();
+
+        assert_eq!("3 hours from now".to_string(), actual);
+    }
+
+    #[test]
+    fn future_to_english_singular() {
+        let time = RoughTime::InTheFuture(TimeUnit::Hours, 1);
+
+        let actual = time.rough_time_to_english();
+
+        assert_eq!("a hour from now".to_string(), actual);
     }
 }
 
