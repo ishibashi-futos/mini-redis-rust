@@ -177,3 +177,38 @@ mod tests_shape {
         }
     }
 }
+
+pub fn describe_point(x: i32, y: i32) -> &'static str {
+    use std::cmp::Ordering::*;
+
+    match (x.cmp(&0), y.cmp(&0)) {
+        (Equal, Equal) => "at the origin",
+        (_, Equal) => "on the x axis",
+        (Equal, _) => "on the y axis",
+        (Greater, Greater) => "in the first quadrant",
+        (Less, Greater) => "in the second quadrant",
+        _ => "somwhere else"
+    }
+}
+
+#[test]
+fn at_the_origin() {
+    let actual = describe_point(0, 0);
+    assert_eq!("at the origin", actual);
+}
+
+pub struct Point {
+    pub x: u32,
+    pub y: u32,
+}
+
+#[test]
+fn origin() {
+    let point = Point { x: 0, y: 0 };
+
+    match point {
+        Point { x: 0, y: 0 } => assert!(true),
+        #[allow(unused_variables)]
+        Point { x, y } => panic!("Illegal pattern"),
+    };
+}
