@@ -56,16 +56,13 @@ pub enum RoughTime {
 impl RoughTime {
     pub fn rough_time_to_english(&self) -> String {
         match self {
-            &RoughTime::InThePast(units, 1) =>
-                format!("a {} ago", units.singular()),
-            &RoughTime::InThePast(units, count) =>
-                format!("{} {} ago", count, units.to_str()),
-            &RoughTime::JustNow =>
-                format!("just now"),
-            &RoughTime::InTheFuture(units, 1) =>
-                format!("a {} from now", units.singular()),
-            &RoughTime::InTheFuture(units, count) =>
-                format!("{} {} from now", count, units.to_str()),
+            &RoughTime::InThePast(units, 1) => format!("a {} ago", units.singular()),
+            &RoughTime::InThePast(units, count) => format!("{} {} ago", count, units.to_str()),
+            &RoughTime::JustNow => format!("just now"),
+            &RoughTime::InTheFuture(units, 1) => format!("a {} from now", units.singular()),
+            &RoughTime::InTheFuture(units, count) => {
+                format!("{} {} from now", count, units.to_str())
+            }
         }
     }
 }
@@ -187,7 +184,7 @@ pub fn describe_point(x: i32, y: i32) -> &'static str {
         (Equal, _) => "on the y axis",
         (Greater, Greater) => "in the first quadrant",
         (Less, Greater) => "in the second quadrant",
-        _ => "somwhere else"
+        _ => "somwhere else",
     }
 }
 

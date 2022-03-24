@@ -214,7 +214,6 @@ mod tests {
 
     #[test]
     fn nested_tree() {
-
         let tree = BinaryTree::new(TreeNode {
             element: 100,
             left: BinaryTree::new(TreeNode {
