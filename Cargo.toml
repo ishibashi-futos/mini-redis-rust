@@ -16,6 +16,7 @@ members = [
     "lib/crate-and-modules",
     "lib/struct-types",
     "lib/enum-types",
+    "lib/trait-types",
 ]
 
 [dependencies]
