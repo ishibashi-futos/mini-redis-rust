@@ -12,8 +12,7 @@ impl Salad {
     }
 }
 
-pub struct Lettuce {
-}
+pub struct Lettuce {}
 
 impl Vegetable for Lettuce {
     fn name(&self) -> &'static str {
@@ -23,12 +22,7 @@ impl Vegetable for Lettuce {
 
 #[test]
 fn order_salad() {
-
-    let salad = Salad::new(
-        vec![
-            Box::new(Lettuce {})
-        ]
-    );
+    let salad = Salad::new(vec![Box::new(Lettuce {})]);
 
     let lettuce = salad.veggies.get(0).unwrap();
 
