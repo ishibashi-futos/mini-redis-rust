@@ -16,7 +16,10 @@ fn write_bytes() {
     assert_eq!(out, bytes);
 }
 
-pub fn top_ten<T: Debug + Hash + Ord + Clone>(values: &mut Vec<T>) -> Vec<T> {
+pub fn top_ten<T>(values: &mut Vec<T>) -> Vec<T>
+where
+    T: Debug + Hash + Ord + Clone,
+{
     let mut vec = Vec::with_capacity(10);
 
     values.sort();
