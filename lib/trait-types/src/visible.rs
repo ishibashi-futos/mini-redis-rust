@@ -37,3 +37,7 @@ impl Visible for Broom {
         self.x == x && self.y - self.height - 1 <= y && y <= self.y
     }
 }
+
+// Creatureを実装する型は、Visibleも実装していなければならない
+pub trait Creature: Visible {
+}
