@@ -43,3 +43,14 @@ fn top_ten_test() {
     assert_eq!(99, values.len());
     assert_eq!(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10], actual);
 }
+
+#[allow(dead_code)]
+fn dot_product<const N: usize>(a: [f64; N], b: [f64; N]) -> f64 {
+    let mut sum = 0.;
+
+    for i in 0..N {
+        sum += a[i] * b[i];
+    }
+
+    sum
+}
