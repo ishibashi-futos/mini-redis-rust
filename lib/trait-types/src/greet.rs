@@ -9,12 +9,9 @@ pub trait Greet {
     }
 }
 
-pub struct Greeter {
+pub struct Greeter {}
 
-}
-
-impl Greet for Greeter {
-}
+impl Greet for Greeter {}
 
 #[test]
 fn greet() {
@@ -23,8 +20,7 @@ fn greet() {
     assert_eq!("Hello", greeter.greet());
 }
 
-pub struct Greeter2 {
-}
+pub struct Greeter2 {}
 
 impl Greet for Greeter2 {
     // `Self::変数名`実装クラスから呼び出しが可能
@@ -40,8 +36,7 @@ fn greet2() {
     assert_eq!("Hello, World!", greeter.greet());
 }
 
-pub struct Greeter3 {
-}
+pub struct Greeter3 {}
 
 impl Greet for Greeter3 {
     // Overrideも可能
