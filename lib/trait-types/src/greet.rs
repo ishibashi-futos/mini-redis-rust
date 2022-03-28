@@ -109,7 +109,7 @@ fn add_one_f64() {
 pub fn dot<const Z: usize>(v1: &[i64; Z], v2: &[i64; Z]) -> i64 {
     let mut total: i64 = 0;
 
-    for i in 0 .. v1.len() {
+    for i in 0..v1.len() {
         total = total + v1[i] * v2[i];
     }
     total
