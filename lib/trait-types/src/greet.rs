@@ -105,3 +105,22 @@ fn add_one_f64() {
 
     assert_eq!(1.1, actual);
 }
+
+pub fn dot<const Z: usize>(v1: &[i64; Z], v2: &[i64; Z]) -> i64 {
+    let mut total: i64 = 0;
+
+    for i in 0 .. v1.len() {
+        total = total + v1[i] * v2[i];
+    }
+    total
+}
+
+#[test]
+fn sum_dot() {
+    let v1 = [1; 10];
+    let v2 = [2; 10];
+
+    let actual = dot(&v1, &v2);
+
+    assert_eq!(20, actual);
+}
