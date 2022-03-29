@@ -1,4 +1,4 @@
-use std::ops::Add;
+use std::ops::{Add, Mul};
 
 pub trait Greet {
     // traitの関連定数を設定することができる
@@ -109,7 +109,7 @@ fn add_one_f64() {
 pub fn dot<const Z: usize>(v1: &[i64; Z], v2: &[i64; Z]) -> i64 {
     let mut total: i64 = 0;
 
-    for i in 0..v1.len() {
+    for i in 0..Z {
         total = total + v1[i] * v2[i];
     }
     total
@@ -121,6 +121,32 @@ fn sum_dot() {
     let v2 = [2; 10];
 
     let actual = dot(&v1, &v2);
+
+    assert_eq!(20, actual);
+}
+
+/// SUM dots
+/// ```
+/// assert_eq!(11, trait_types::greet::dot_g(&[1, 2, 3, 4], &[1, 1, 1, 1]));
+/// ```
+pub fn dot_g<N>(v1: &[N], v2: &[N]) -> N
+    where N: Add<Output = N> + Mul<Output = N> + Default + Copy
+{
+    let mut total = N::default();
+
+    for i in 0..v1.len() {
+        total = total + v1[i] * v2[i];
+    }
+
+    total
+}
+
+#[test]
+fn sum_dot_g() {
+    let v1 = [1; 10];
+    let v2 = [2; 10];
+
+    let actual = dot_g(&v1, &v2);
 
     assert_eq!(20, actual);
 }
