@@ -130,7 +130,8 @@ fn sum_dot() {
 /// assert_eq!(11, trait_types::greet::dot_g(&[1, 2, 3, 4], &[1, 1, 1, 1]));
 /// ```
 pub fn dot_g<N>(v1: &[N], v2: &[N]) -> N
-    where N: Add<Output = N> + Mul<Output = N> + Default + Copy
+where
+    N: Add<Output = N> + Mul<Output = N> + Default + Copy,
 {
     let mut total = N::default();
 
