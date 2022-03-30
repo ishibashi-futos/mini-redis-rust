@@ -17,6 +17,7 @@ members = [
     "lib/struct-types",
     "lib/enum-types",
     "lib/trait-types",
+    "lib/operator-overload",
 ]
 
 [dependencies]
