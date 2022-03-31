@@ -9,11 +9,11 @@ pub struct Point {
 impl PartialOrd for Point {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         if self.x == other.y && self.y == other.y {
-            return Some(Ordering::Equal)
+            return Some(Ordering::Equal);
         } else if self.x >= other.x && self.y >= other.y {
-            return Some(Ordering::Greater)
+            return Some(Ordering::Greater);
         } else if self.x <= other.x && self.y <= other.y {
-            return Some(Ordering::Less)
+            return Some(Ordering::Less);
         }
         None
     }
@@ -30,7 +30,10 @@ fn equal() {
 #[test]
 fn greater() {
     let point1 = Point { x: 10.0, y: 10.0 };
-    let point2 = Point { x: 9.999999, y: 9.999999 };
+    let point2 = Point {
+        x: 9.999999,
+        y: 9.999999,
+    };
 
     assert!(point1 > point2);
 }
