@@ -748,6 +748,14 @@ name = "error_handling"
 version = "0.1.0"
 
 [[package]]
+name = "expect"
+version = "0.1.0"
+source = "git+https://github.com/ishibashi-futos/expect-rust?branch=main#64ea29c7fd3f9ef605410b9762c64788084d1141"
+dependencies = [
+ "regex",
+]
+
+[[package]]
 name = "failure"
 version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1439,6 +1447,9 @@ checksum = "87f3e037eac156d1775da914196f0f37741a274155e34a0b7e427c35d2a2ecb9"
 [[package]]
 name = "operator_overload"
 version = "0.1.0"
+dependencies = [
+ "expect",
+]
 
 [[package]]
 name = "parking_lot"
