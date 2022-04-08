@@ -18,6 +18,7 @@ members = [
     "lib/enum-types",
     "lib/trait-types",
     "lib/operator-overload",
+    "lib/utility-trait",
 ]
 
 [dependencies]
