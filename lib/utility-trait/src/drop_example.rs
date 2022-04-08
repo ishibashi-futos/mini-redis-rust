@@ -1,4 +1,4 @@
-use std::ops::{DerefMut, Deref};
+use std::ops::{Deref, DerefMut};
 
 pub struct Application<'a> {
     pub name: String,
@@ -10,7 +10,8 @@ impl<'a> Drop for Application<'a> {
     fn drop(&mut self) {
         self.writer.write(format!("Dropping {}", self.name));
         if !self.nicknames.is_empty() {
-            self.writer.write(format!("(AKA {})", self.nicknames.join(", ")));
+            self.writer
+                .write(format!("(AKA {})", self.nicknames.join(", ")));
         }
     }
 }
@@ -25,7 +26,9 @@ pub struct WriterImpl {
 
 impl WriterImpl {
     pub fn new() -> Self {
-        WriterImpl { messages: Vec::new() }
+        WriterImpl {
+            messages: Vec::new(),
+        }
     }
 
     pub fn get_all_message(&self) -> &Vec<String> {
@@ -67,7 +70,10 @@ impl<T> DerefMut for Selector<T> {
 
 impl<T> Default for Selector<T> {
     fn default() -> Self {
-        Selector { elements: Vec::new(), current: 0usize }
+        Selector {
+            elements: Vec::new(),
+            current: 0usize,
+        }
     }
 }
 
@@ -95,7 +101,7 @@ mod tests {
             let _a = Application {
                 name: "John".to_owned(),
                 nicknames: vec!["Jack".to_owned(), "Snake".to_owned()],
-                writer: &mut w
+                writer: &mut w,
             };
             // この行で`_a`の値がDropされる
         }
