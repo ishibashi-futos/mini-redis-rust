@@ -129,4 +129,18 @@ mod tests {
         s.next();
         expect(&s.to_uppercase().to_string()).equals(&'D'.to_string());
     }
+
+    #[test]
+    fn default_fruits() {
+        let f = Fruits::default();
+
+        match f {
+            Fruits::Apple => {
+                // ok
+            }
+            _ => {
+                panic!("not apple")
+            }
+        }
+    }
 }
