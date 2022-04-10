@@ -522,6 +522,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "closure_examples"
+version = "0.1.0"
+dependencies = [
+ "expect",
+]
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"

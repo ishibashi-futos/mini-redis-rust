@@ -19,6 +19,7 @@ members = [
     "lib/trait-types",
     "lib/operator-overload",
     "lib/utility-trait",
+    "lib/closure-examples",
 ]
 
 [dependencies]
