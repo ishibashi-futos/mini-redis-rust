@@ -4,8 +4,8 @@ pub fn triangle(n: i32) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use expect_rs::expect;
     use crate::triangle::*;
+    use expect_rs::expect;
 
     #[test]
     fn triangle_test() {
