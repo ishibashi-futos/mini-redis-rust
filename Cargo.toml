@@ -20,6 +20,7 @@ members = [
     "lib/operator-overload",
     "lib/utility-trait",
     "lib/closure-examples",
+    "lib/iterators",
 ]
 
 [dependencies]

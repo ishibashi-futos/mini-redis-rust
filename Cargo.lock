@@ -763,6 +763,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "expect_rs"
+version = "0.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ac5c040aa36259185533e4db21b96d6bc7292060b31cf5d7d78b2e4d491c5bc7"
+dependencies = [
+ "regex",
+]
+
+[[package]]
 name = "failure"
 version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1043,6 +1052,13 @@ dependencies = [
  "widestring",
  "winapi 0.3.9",
  "winreg",
+]
+
+[[package]]
+name = "iterators"
+version = "0.1.0"
+dependencies = [
+ "expect_rs",
 ]
 
 [[package]]
