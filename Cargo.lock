@@ -1059,6 +1059,7 @@ name = "iterators"
 version = "0.1.0"
 dependencies = [
  "expect_rs",
+ "rand 0.6.5",
 ]
 
 [[package]]
